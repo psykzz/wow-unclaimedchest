@@ -1,0 +1,10 @@
+## Interface: 80205
+## Author: PsyKzzz
+## Version: 1.00
+## Title: |cfffe7b2cUnclaimed Mythic Chests|r
+## Notes: Unclaimed Mythic Chests - By PsyKzz
+
+## SavedVariables: UnclaimedChestGlobal
+Libraries/Load.xml
+UnclaimedChest.lua
+
