@@ -1,4 +1,4 @@
-local addonName, ldbName = "UnclaimedChest", "ldbUnclaimedChest"
+local addonName, ldbName = "UnclaimedChest", "Unclaimed Chest"
 local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
 local Translit = LibStub:GetLibrary("LibTranslit-1.0")
 local ldbData = ldb:NewDataObject(ldbName, {type = "data source", text = "Weekly Mythic+ Chests"})
