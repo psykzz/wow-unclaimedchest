@@ -1,10 +1,29 @@
 [![Build Status](https://travis-ci.org/psykzz/wow-unclaimedchest.svg?branch=master)](https://travis-ci.org/psykzz/wow-unclaimedchest)
 
-# UnclaimedChest
-LibDataBroker addon to show unclaimed, complete and incomplete mythic+ chests.
+# Mythic+ Unclaimed Chests
 
-Can be used and shown within ElvUI.
 
+This is a small LibDataBroker addon that provides data on your characters unclaimed mythic+ chests.
+
+This addon will track every character, above level 120.
+On each of those characters, it will show the state of the chest as either:
+
+* incomplete - You still need to complete a mythic this week
+* complete - You have completeted a key, but waiting for reset
+* claimable - You have a claimable mythic+ chest on this character.
+
+
+## FAQ
+
+The addon is still new, so little testing has been done.
+If you do have any issues though, you can leave an issue on [github](https://github.com/psykzz/wow-unclaimedchest/issues/new), or ping me on discord (psykzz#4695).
+
+
+## Images
+
+![](https://media.forgecdn.net/attachments/274/525/unknown-1.png)
+
+![](https://media.forgecdn.net/attachments/274/524/unknown.png)
 
 
 ## Other links
