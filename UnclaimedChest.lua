@@ -86,7 +86,7 @@ function ldbData:OnTooltipShow()
     self:AddLine(string.format("Unclaimed chests: |cffffffff%s|r", claimableChestCount))
     self:AddLine(string.format("Complete this week: |cffffffff%s|r", completeChestCount))
     self:AddLine(" ")
-    for characteName, data in spairs(UnclaimedChestGlobal) do
+    for characteName, data in spairs(UnclaimedChestGlobal, chestSort) do
         self:AddDoubleLine(characteName, formatLine(data), 1,1,1, 1,1,1)
     end
 end
@@ -99,7 +99,7 @@ function SlashCmdList.UNCLAIMEDCHESTS(msg)
 
     updateMythicChests()
     print(ldbData.text);
-    for characteName, data in spairs(UnclaimedChestGlobal) do
+    for characteName, data in spairs(UnclaimedChestGlobal, chestSort) do
         print(characteName, formatLine(data))
     end
     return true
@@ -210,4 +210,12 @@ function getHighestCompletion()
         end
     end
     return maxCompleted, C_MythicPlus.GetRewardLevelForDifficultyLevel(maxCompleted)
+end
+
+
+chestSort = function(t,a,b)
+    if t[b]["level"] == t[a]["level"] then
+        return b > a -- This is sort by name
+    end
+    return t[b]["level"] < t[a]["level"]
 end
