@@ -1,22 +1,53 @@
-local addonName, ldbName = "UnclaimedChest", "Unclaimed Chest"
+local addonName, addon = ...
+local ldbName = "Unclaimed Chest"
 local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
 local Translit = LibStub:GetLibrary("LibTranslit-1.0")
-local ldbData = ldb:NewDataObject(ldbName, {type = "data source", text = "Weekly Mythic+ Chests"})
+local ldbData = ldb:NewDataObject(ldbName, {
+    type = "data source",
+    text = "n/a",
+    value = "n/a",
+    OnClick = function() updateMythicChests() end
+})
 local frame = CreateFrame("FRAME")
 
 frame:RegisterEvent("ADDON_LOADED")
 frame:RegisterEvent("PLAYER_LOGOUT")
+frame:RegisterEvent("CHALLENGE_MODE_MAPS_UPDATE")
 
+
+local rewardsRequested = false
 function frame:OnEvent(event, arg1)
-    if (event ~= "ADDON_LOADED" and event ~= "PLAYER_LOGOUT") or arg1 ~= addonName then
+    if event == "ADDON_LOADED" and arg1 ~= addonName then
+        return
+    end
+
+    if event == "CHALLENGE_MODE_MAPS_UPDATE" then
+        rewardsRequested = true
+    elseif not rewardsRequested then
+        C_MythicPlus.RequestRewards()
+        print("requested rewards")
         return
     end
 
     if UnclaimedChestGlobal == nil then
         UnclaimedChestGlobal = {}
     end
+
+    if UnitLevel("player") ~= GetMaxPlayerLevel() then
+        return
+    end
+
+    updateMythicChests()
+    -- C_Timer.After(3, function() updateMythicChests() end) -- for some reason it starts off wrong.
+end
+frame:SetScript("OnEvent", frame.OnEvent)
+
+function updateMythicChests()
     local chestAvailable = C_MythicPlus.IsWeeklyRewardAvailable()
     local currentLevel, rewardLevel, _, _ = C_MythicPlus.GetWeeklyChestRewardLevel()
+    if currentLevel == 0 and rewardLevel == -1 then
+        currentLevel, rewardLevel, _ = getHighestCompletion() -- Try a manual approach?
+    end
     local currentDate = C_DateAndTime.GetCurrentCalendarTime()
     local map = {
         Monday = 2,
@@ -40,10 +71,9 @@ function frame:OnEvent(event, arg1)
     UnclaimedChestGlobal[playerName] = chestData
 
     local claimableChestCount = availableChestCount(UnclaimedChestGlobal, 2) or 0
-    ldbData.text = string.format("M+ Unclaimed: %s", claimableChestCount)
+    ldbData.text = string.format("Unclaimed Chest: |cffFFFFFF%s|r", claimableChestCount)
+    ldbData.value = claimableChestCount
 end
-frame:SetScript("OnEvent", frame.OnEvent)
-
 
 -- LDB
 function ldbData:OnTooltipShow()
@@ -66,6 +96,8 @@ end
 -- Test command to show the output
 SLASH_UNCLAIMEDCHESTS1 = "/unclaimed";
 function SlashCmdList.UNCLAIMEDCHESTS(msg)
+
+    updateMythicChests()
     print(ldbData.text);
     for characteName, data in spairs(UnclaimedChestGlobal) do
         print(characteName, formatLine(data))
@@ -158,4 +190,24 @@ function formatLine(data)
         chestStatus = "|cffff00ffUnknown|r"
     end
     return string.format("|cffffffff+%d (|cffffff00%d ilvl|cffffffff) |cffffffff%s|r", data["level"], data["ilvl"], chestStatus)
+end
+
+
+function getHighestCompletion()
+    local maps = C_ChallengeMode.GetMapTable()
+    local maxCompleted = 0
+    for _, mapID in pairs(maps) do
+        local _, level, _, _, members = C_MythicPlus.GetWeeklyBestForMap(mapID)
+        if members then
+            for _,member in pairs(members) do
+                if member.name == UnitName("player") then
+                    if level and level > maxCompleted then
+                        maxCompleted = level
+                    end
+                    break;
+                end
+            end
+        end
+    end
+    return maxCompleted, C_MythicPlus.GetRewardLevelForDifficultyLevel(maxCompleted)
 end

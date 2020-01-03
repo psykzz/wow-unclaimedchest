@@ -5,6 +5,8 @@
 ## Notes: Unclaimed Mythic Chests - By PsyKzz
 
 ## SavedVariables: UnclaimedChestGlobal
+
 Libraries/Load.xml
+
 UnclaimedChest.lua
 
