@@ -27,4 +27,3 @@ If you do have any issues though, you can leave an issue on [github](https://git
 
 ## Other links
 * [Curse](https://mods.curse.com/addons/wow/unclaimedchest)
-* [Travis](https://travis-ci.org/psykzz/wow-unclaimedchest)
