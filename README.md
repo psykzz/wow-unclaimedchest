@@ -1,6 +1,5 @@
 # Mythic+ Unclaimed Chests
 
-
 This is a small LibDataBroker addon that provides data on your characters unclaimed mythic+ chests.
 
 This addon will track every character, above level 120.
@@ -21,12 +20,11 @@ If you do have any issues though, you can leave an issue on [github](https://git
 
 ![](https://media.forgecdn.net/attachments/274/527/elvui.png)
 
-![](https://media.forgecdn.net/attachments/274/528/elvui.png)
+![](https://media.forgecdn.net/attachments/274/551/test.png)
 
 ![](https://media.forgecdn.net/attachments/274/526/elvui.png)
 
 
-
 ## Other links
-* [Curse](https://mods.curse.com/addons/wow/unclaimedchests)
+* [Curse](https://mods.curse.com/addons/wow/unclaimedchest)
 * [Travis](https://travis-ci.org/psykzz/wow-unclaimedchest)
