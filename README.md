@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/psykzz/wow-unclaimedchest.svg?branch=master)](https://travis-ci.org/psykzz/wow-unclaimedchest)
-
 # Mythic+ Unclaimed Chests
 
 
