@@ -133,10 +133,6 @@ function isAfter(date1, date2)
         return false
     elseif date1["monthDay"] < date2["monthDay"] then
         return false
-    elseif date1["hour"] < date2["hour"] then
-        return false
-    elseif date1["minute"] < date2["minute"] then
-        return false
     else
         return true
     end
